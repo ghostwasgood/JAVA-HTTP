@@ -3,11 +3,9 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 // CODE :D
@@ -16,13 +14,16 @@ public class Main {
 	private static HttpURLConnection connection;
 	private static URL requrl;
 	private static URL ipurl;
+	private static StringBuffer ResponseContent_IP;
+	private static StringBuffer ResponseContent_req;
 	
 	public static void main(String[] args) {
 		
 		Scanner scanner = new Scanner(System.in);
 		BufferedReader reader;
 		String line;
-		StringBuffer responseContent = new StringBuffer();
+		ResponseContent_req = new StringBuffer();
+		ResponseContent_IP = new StringBuffer();
 		
 		// MAIN MENU :D
 		String ASCII_TITLE = "\r\n"
@@ -64,23 +65,23 @@ public class Main {
 					connection.setReadTimeout(2000);
 					
 					
-					int status = connection.getResponseCode();
+					int status_req = connection.getResponseCode();
 					
-					if (status > 299) {
+					if (status_req > 299) {
 						reader = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
 						while((line = reader.readLine()) != null) {
-							responseContent.append(line);
+							ResponseContent_req.append(line);
 						}
 						reader.close();
 					} else {
 						reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 						while((line = reader.readLine()) != null) {
-							responseContent.append(line);
+							ResponseContent_req.append(line);
 						}
 						reader.close();
 					}
-					System.out.println("\n[#] STATUS CODE: " + status);
-					System.out.println("[#] RESPONSE TEXT: \n" + responseContent.toString());
+					System.out.println("\n[#] STATUS CODE: " + status_req);
+					System.out.println("[#] RESPONSE TEXT: \n" + ResponseContent_req.toString());
 					
 					
 				} catch (MalformedURLException e) {
@@ -105,18 +106,18 @@ public class Main {
 				connection.setRequestMethod("GET");
 				connection.setConnectTimeout(2000);
 				connection.setReadTimeout(2000);
-				int status = connection.getResponseCode();
+				int status_IP = connection.getResponseCode();
 				
-				if (status > 299) {
+				if (status_IP > 299) {
 					reader = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
 					while((line = reader.readLine()) != null) {
-						responseContent.append(line);
+						ResponseContent_IP.append(line);
 					}
 					reader.close();
 				} else {
 					reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 					while((line = reader.readLine()) != null) {
-						responseContent.append(line);
+						ResponseContent_IP.append(line);
 					}
 					reader.close();
 				}
@@ -125,7 +126,7 @@ public class Main {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				System.out.println("\n[*] IP INFO: \n" + responseContent.toString());
+				System.out.println("\n[*] IP INFO: \n" + ResponseContent_IP.toString());
 				System.out.print("\n\n[*] Press enter to return to the menu.. ");
 				scanner.nextLine();
 				break;

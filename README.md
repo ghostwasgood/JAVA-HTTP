@@ -4,7 +4,7 @@ Hello :wave:
 
 I made this very simple tool to start studying HTTP requests in JAVA.
 
-#### You need JAVA to be able to test it: [Download JAVA](https://download.oracle.com/java/18/latest/jdk-18_windows-x64_bin.exe)
+#### You need JAVA 18 to be able to test it: [Download JAVA](https://www.oracle.com/java/technologies/downloads/#jdk18-windows)
 
 > **Functions:**
 
